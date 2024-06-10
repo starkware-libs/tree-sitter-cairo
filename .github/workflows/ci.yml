@@ -47,3 +47,4 @@ jobs:
         uses: tree-sitter/parse-action@v4
         with:
           files: examples/**/*.cairo
+          invalid-files: examples/compiler/crates/cairo-lang-parser/src/parser_test_data/cairo_test_files/*.cairo

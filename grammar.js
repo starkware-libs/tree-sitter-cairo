@@ -560,7 +560,7 @@ module.exports = grammar({
     field_initializer_list: ($) =>
       seq(
         '{',
-        sepBy(',', choice($.shorthand_field_initializer, $.field_initializer, base_field_initializer)),
+        sepBy(',', choice($.shorthand_field_initializer, $.field_initializer, $.base_field_initializer)),
         optional(','),
         '}',
       ),
@@ -577,7 +577,7 @@ module.exports = grammar({
         field('value', $.expression),
       ),
 
-    base_field_initializer: ($) => seq('..', $._expression),
+    base_field_initializer: ($) => seq('..', $.expression),
 
     // for example in let mut a; it would be `mut a`
     mut_pattern: ($) => prec(-1, seq($.mutable_specifier, $._pattern)),
@@ -620,8 +620,8 @@ module.exports = grammar({
     numeric_literal: (_) =>
       token(
         seq(
-          choice(/[0-9]+/, /0x[0-9a-fA-F]+/, /0b[01]+/, /0o[0-7]+/),
-          optional(seq('_', choice(...integerTypes, 'u256', 'felt252'))),
+          choice(/[0-9_]+/, /0x[0-9a-fA-F_]+/, /0b[01_]+/, /0o[0-7_]+/),
+          optional(token.immediate(seq('_', choice(...integerTypes, 'u256', 'felt252')))),
         ),
       ),
 

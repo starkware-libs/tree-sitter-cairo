@@ -526,6 +526,21 @@
     }
   },
   {
+    "type": "base_field_initializer",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "binary_expression",
     "named": true,
     "fields": {
@@ -1229,6 +1244,10 @@
       "multiple": true,
       "required": false,
       "types": [
+        {
+          "type": "base_field_initializer",
+          "named": true
+        },
         {
           "type": "field_initializer",
           "named": true
@@ -2976,6 +2995,10 @@
   },
   {
     "type": ".",
+    "named": false
+  },
+  {
+    "type": "..",
     "named": false
   },
   {

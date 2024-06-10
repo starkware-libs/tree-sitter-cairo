@@ -2553,6 +2553,10 @@
                 },
                 {
                   "type": "STRING",
+                  "value": ".."
+                },
+                {
+                  "type": "STRING",
                   "value": "_"
                 },
                 {
@@ -3078,6 +3082,10 @@
                     {
                       "type": "SYMBOL",
                       "name": "field_initializer"
+                    },
+                    {
+                      "type": "SYMBOL",
+                      "name": "base_field_initializer"
                     }
                   ]
                 },
@@ -3100,6 +3108,10 @@
                           {
                             "type": "SYMBOL",
                             "name": "field_initializer"
+                          },
+                          {
+                            "type": "SYMBOL",
+                            "name": "base_field_initializer"
                           }
                         ]
                       }
@@ -3185,6 +3197,19 @@
             "type": "SYMBOL",
             "name": "expression"
           }
+        }
+      ]
+    },
+    "base_field_initializer": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": ".."
+        },
+        {
+          "type": "SYMBOL",
+          "name": "expression"
         }
       ]
     },
@@ -3321,19 +3346,19 @@
             "members": [
               {
                 "type": "PATTERN",
-                "value": "[0-9]+"
+                "value": "[0-9_]+"
               },
               {
                 "type": "PATTERN",
-                "value": "0x[0-9a-fA-F]+"
+                "value": "0x[0-9a-fA-F_]+"
               },
               {
                 "type": "PATTERN",
-                "value": "0b[01]+"
+                "value": "0b[01_]+"
               },
               {
                 "type": "PATTERN",
-                "value": "0o[0-7]+"
+                "value": "0o[0-7_]+"
               }
             ]
           },
@@ -3341,70 +3366,73 @@
             "type": "CHOICE",
             "members": [
               {
-                "type": "SEQ",
-                "members": [
-                  {
-                    "type": "STRING",
-                    "value": "_"
-                  },
-                  {
-                    "type": "CHOICE",
-                    "members": [
-                      {
-                        "type": "STRING",
-                        "value": "u8"
-                      },
-                      {
-                        "type": "STRING",
-                        "value": "i8"
-                      },
-                      {
-                        "type": "STRING",
-                        "value": "u16"
-                      },
-                      {
-                        "type": "STRING",
-                        "value": "i16"
-                      },
-                      {
-                        "type": "STRING",
-                        "value": "u32"
-                      },
-                      {
-                        "type": "STRING",
-                        "value": "i32"
-                      },
-                      {
-                        "type": "STRING",
-                        "value": "u64"
-                      },
-                      {
-                        "type": "STRING",
-                        "value": "i64"
-                      },
-                      {
-                        "type": "STRING",
-                        "value": "u128"
-                      },
-                      {
-                        "type": "STRING",
-                        "value": "i128"
-                      },
-                      {
-                        "type": "STRING",
-                        "value": "usize"
-                      },
-                      {
-                        "type": "STRING",
-                        "value": "u256"
-                      },
-                      {
-                        "type": "STRING",
-                        "value": "felt252"
-                      }
-                    ]
-                  }
-                ]
+                "type": "IMMEDIATE_TOKEN",
+                "content": {
+                  "type": "SEQ",
+                  "members": [
+                    {
+                      "type": "STRING",
+                      "value": "_"
+                    },
+                    {
+                      "type": "CHOICE",
+                      "members": [
+                        {
+                          "type": "STRING",
+                          "value": "u8"
+                        },
+                        {
+                          "type": "STRING",
+                          "value": "i8"
+                        },
+                        {
+                          "type": "STRING",
+                          "value": "u16"
+                        },
+                        {
+                          "type": "STRING",
+                          "value": "i16"
+                        },
+                        {
+                          "type": "STRING",
+                          "value": "u32"
+                        },
+                        {
+                          "type": "STRING",
+                          "value": "i32"
+                        },
+                        {
+                          "type": "STRING",
+                          "value": "u64"
+                        },
+                        {
+                          "type": "STRING",
+                          "value": "i64"
+                        },
+                        {
+                          "type": "STRING",
+                          "value": "u128"
+                        },
+                        {
+                          "type": "STRING",
+                          "value": "i128"
+                        },
+                        {
+                          "type": "STRING",
+                          "value": "usize"
+                        },
+                        {
+                          "type": "STRING",
+                          "value": "u256"
+                        },
+                        {
+                          "type": "STRING",
+                          "value": "felt252"
+                        }
+                      ]
+                    }
+                  ]
+                }
               },
               {
                 "type": "BLANK"
