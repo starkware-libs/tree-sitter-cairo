@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches: ["*"]
+    paths:
+      - grammar.js
+      - src/**
+      - test/**
+      - bindings/**
+      - binding.gyp
+  pull_request:
+    paths:
+      - grammar.js
+      - src/**
+      - test/**
+      - bindings/**
+      - binding.gyp
+
+concurrency:
+  group: ${{github.workflow}}-${{github.ref}}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Test parser
+    runs-on: ${{matrix.os}}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-14]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up tree-sitter
+        uses: tree-sitter/setup-action/cli@v1
+      - name: Set up examples
+        run: |-
+          git clone https://github.com/starkware-libs/cairo examples/compiler --single-branch --depth=1 --filter=blob:none
+          git clone https://github.com/OpenZeppelin/cairo-contracts examples/openzeppelin --single-branch --depth=1 --filter=blob:none
+          git clone https://github.com/keep-starknet-strange/alexandria examples/alexandria --single-branch --depth=1 --filter=blob:none
+      - name: Run tests
+        uses: tree-sitter/parser-test-action@v2
+        with:
+          test-rust: ${{runner.os == 'Linux'}}
+      - name: Parse examples
+        uses: tree-sitter/parse-action@v4
+        with:
+          files: examples/**/*.cairo

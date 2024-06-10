@@ -18,8 +18,6 @@
   (array_expression)
 
   (token_tree)
-  (token_tree_pattern)
-  (token_repetition)
 ] @indent
 
 [
