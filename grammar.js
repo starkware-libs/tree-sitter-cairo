@@ -14,7 +14,7 @@ const PREC = {
   or: 2,
   assign: 0,
 };
-const TOKEN_TREE_NON_SPECIAL_PUNCTUATION = ['+', '-', '*', '/', '%', '^', '!', '~', '&', '|', '&&', '||', '<<', '>>', '+=', '-=', '*=', '/=', '%=', '^=', '&=', '|=', '=', '==', '!=', '>', '<', '>=', '<=', '@', '_', '.', ',', ';', ':', '::', '->', '=>', '#', '?',
+const TOKEN_TREE_NON_SPECIAL_PUNCTUATION = ['+', '-', '*', '/', '%', '^', '!', '~', '&', '|', '&&', '||', '<<', '>>', '+=', '-=', '*=', '/=', '%=', '^=', '&=', '|=', '=', '==', '!=', '>', '<', '>=', '<=', '@', '..', '_', '.', ',', ';', ':', '::', '->', '=>', '#', '?',
 ];
 
 const integerTypes = ['u8', 'i8', 'u16', 'i16', 'u32', 'i32', 'u64', 'i64', 'u128', 'i128', 'usize',
@@ -560,7 +560,7 @@ module.exports = grammar({
     field_initializer_list: ($) =>
       seq(
         '{',
-        sepBy(',', choice($.shorthand_field_initializer, $.field_initializer)),
+        sepBy(',', choice($.shorthand_field_initializer, $.field_initializer, base_field_initializer)),
         optional(','),
         '}',
       ),
@@ -576,6 +576,8 @@ module.exports = grammar({
         ':',
         field('value', $.expression),
       ),
+
+    base_field_initializer: ($) => seq('..', $._expression),
 
     // for example in let mut a; it would be `mut a`
     mut_pattern: ($) => prec(-1, seq($.mutable_specifier, $._pattern)),
