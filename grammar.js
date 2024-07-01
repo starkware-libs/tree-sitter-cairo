@@ -14,10 +14,62 @@ const PREC = {
   or: 2,
   assign: 0,
 };
-const TOKEN_TREE_NON_SPECIAL_PUNCTUATION = ['+', '-', '*', '/', '%', '^', '!', '~', '&', '|', '&&', '||', '<<', '>>', '+=', '-=', '*=', '/=', '%=', '^=', '&=', '|=', '=', '==', '!=', '>', '<', '>=', '<=', '@', '..', '_', '.', ',', ';', ':', '::', '->', '=>', '#', '?',
+const TOKEN_TREE_NON_SPECIAL_PUNCTUATION = [
+  '+',
+  '-',
+  '*',
+  '/',
+  '%',
+  '^',
+  '!',
+  '~',
+  '&',
+  '|',
+  '&&',
+  '||',
+  '<<',
+  '>>',
+  '+=',
+  '-=',
+  '*=',
+  '/=',
+  '%=',
+  '^=',
+  '&=',
+  '|=',
+  '=',
+  '==',
+  '!=',
+  '>',
+  '<',
+  '>=',
+  '<=',
+  '@',
+  '..',
+  '_',
+  '.',
+  ',',
+  ';',
+  ':',
+  '::',
+  '->',
+  '=>',
+  '#',
+  '?',
 ];
 
-const integerTypes = ['u8', 'i8', 'u16', 'i16', 'u32', 'i32', 'u64', 'i64', 'u128', 'i128', 'usize',
+const integerTypes = [
+  'u8',
+  'i8',
+  'u16',
+  'i16',
+  'u32',
+  'i32',
+  'u64',
+  'i64',
+  'u128',
+  'i128',
+  'usize',
 ];
 const primitiveTypes = integerTypes.concat(['bool', 'ByteArray', 'felt252']);
 module.exports = grammar({
@@ -72,6 +124,7 @@ module.exports = grammar({
         $.let_declaration,
         $.use_declaration,
         $.associated_type,
+        $.associated_impl,
       ),
     // Declaration section
 
@@ -110,6 +163,7 @@ module.exports = grammar({
         field('type_parameters', optional($.type_parameters)),
         choice(field('body', $.declaration_list), ';'),
       ),
+
     // trait A {
     //     type B;
     // }
@@ -120,6 +174,12 @@ module.exports = grammar({
         field('type_parameters', optional($.type_parameters)),
         ';',
       ),
+
+    // trait A {
+    //     impl B<t>: A<T>;
+    // }
+    associated_impl: ($) =>
+      seq('impl', field('name', $.identifier), ':', $._type, ';'),
 
     // const FOO: felt252 = 1;
     const_item: ($) =>
@@ -508,6 +568,7 @@ module.exports = grammar({
         'type',
         'use',
         'while',
+        'for',
       ),
     // Section - Patterns
 
@@ -560,7 +621,14 @@ module.exports = grammar({
     field_initializer_list: ($) =>
       seq(
         '{',
-        sepBy(',', choice($.shorthand_field_initializer, $.field_initializer, $.base_field_initializer)),
+        sepBy(
+          ',',
+          choice(
+            $.shorthand_field_initializer,
+            $.field_initializer,
+            $.base_field_initializer,
+          ),
+        ),
         optional(','),
         '}',
       ),
@@ -621,7 +689,11 @@ module.exports = grammar({
       token(
         seq(
           choice(/[0-9_]+/, /0x[0-9a-fA-F_]+/, /0b[01_]+/, /0o[0-7_]+/),
-          optional(token.immediate(seq('_', choice(...integerTypes, 'u256', 'felt252')))),
+          optional(
+            token.immediate(
+              seq('_', choice(...integerTypes, 'u256', 'felt252')),
+            ),
+          ),
         ),
       ),
 
@@ -836,6 +908,7 @@ module.exports = grammar({
         $.if_expression,
         $.match_expression,
         $.while_expression,
+        $.for_expression,
         $.loop_expression,
       ),
 
@@ -962,6 +1035,13 @@ module.exports = grammar({
     while_expression: ($) =>
       seq('while', field('condition', $._condition), field('body', $.block)),
 
+    for_expression: $ => seq(
+      'for',
+      field('pattern', $._pattern),
+      'in',
+      field('value', $.expression),
+      field('body', $.block),
+    ),
     // loop {}
     loop_expression: ($) => seq('loop', field('body', $.block)),
 

@@ -4,6 +4,10 @@
     "named": true,
     "subtypes": [
       {
+        "type": "associated_impl",
+        "named": true
+      },
+      {
         "type": "associated_type",
         "named": true
       },
@@ -266,6 +270,10 @@
         "named": true
       },
       {
+        "type": "for_expression",
+        "named": true
+      },
+      {
         "type": "generic_function",
         "named": true
       },
@@ -438,6 +446,32 @@
           }
         ]
       }
+    }
+  },
+  {
+    "type": "associated_impl",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "_type",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -1297,6 +1331,42 @@
           "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "for_expression",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "block",
+            "named": true
+          }
+        ]
+      },
+      "pattern": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "_pattern",
+            "named": true
+          }
+        ]
+      },
+      "value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "expression",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -3131,6 +3201,10 @@
   },
   {
     "type": "fn",
+    "named": false
+  },
+  {
+    "type": "for",
     "named": false
   },
   {
