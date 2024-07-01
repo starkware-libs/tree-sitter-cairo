@@ -91,6 +91,10 @@
         {
           "type": "SYMBOL",
           "name": "associated_type"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "associated_impl"
         }
       ]
     },
@@ -272,6 +276,35 @@
               }
             ]
           }
+        },
+        {
+          "type": "STRING",
+          "value": ";"
+        }
+      ]
+    },
+    "associated_impl": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "impl"
+        },
+        {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": ":"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_type"
         },
         {
           "type": "STRING",

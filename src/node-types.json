@@ -4,6 +4,10 @@
     "named": true,
     "subtypes": [
       {
+        "type": "associated_impl",
+        "named": true
+      },
+      {
         "type": "associated_type",
         "named": true
       },
@@ -438,6 +442,32 @@
           }
         ]
       }
+    }
+  },
+  {
+    "type": "associated_impl",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "_type",
+          "named": true
+        }
+      ]
     }
   },
   {
