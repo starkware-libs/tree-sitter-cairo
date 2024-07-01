@@ -568,6 +568,7 @@ module.exports = grammar({
         'type',
         'use',
         'while',
+        'for',
       ),
     // Section - Patterns
 
@@ -907,6 +908,7 @@ module.exports = grammar({
         $.if_expression,
         $.match_expression,
         $.while_expression,
+        $.for_expression,
         $.loop_expression,
       ),
 
@@ -1033,6 +1035,13 @@ module.exports = grammar({
     while_expression: ($) =>
       seq('while', field('condition', $._condition), field('body', $.block)),
 
+    for_expression: $ => seq(
+      'for',
+      field('pattern', $._pattern),
+      'in',
+      field('value', $.expression),
+      field('body', $.block),
+    ),
     // loop {}
     loop_expression: ($) => seq('loop', field('body', $.block)),
 
