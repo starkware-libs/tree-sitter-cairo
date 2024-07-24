@@ -52,6 +52,7 @@
     "build": "tree-sitter generate --no-bindings",
     "build-wasm": "tree-sitter build --wasm",
     "lint": "eslint grammar.js",
+    "fix": "eslint grammar.js --fix",
     "parse": "tree-sitter parse",
     "test": "tree-sitter test"
   },

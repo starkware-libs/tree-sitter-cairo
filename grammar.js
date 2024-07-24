@@ -13,6 +13,7 @@ const PREC = {
   and: 3,
   or: 2,
   assign: 0,
+  closure: -1,
 };
 const TOKEN_TREE_NON_SPECIAL_PUNCTUATION = [
   '+',
@@ -589,7 +590,7 @@ module.exports = grammar({
         '_',
       ),
     // for example in let (a, b) = c; it would be `(a, b)`
-    tuple_pattern: ($) => seq('(', sepBy(',', $._pattern), optional(','), ')'),
+    tuple_pattern: ($) => seq('(', sepBy(',', choice($._pattern, $.closure_expression)), optional(','), ')'),
 
     // for example in let [a, b] = c; it would be `[a, b]`
     slice_pattern: ($) => seq('[', sepBy(',', $._pattern), optional(','), ']'),
@@ -806,6 +807,7 @@ module.exports = grammar({
         $.index_expression,
         $.parenthesized_expression,
         prec(1, $.macro_invocation),
+        $.closure_expression,
       ),
     // for example in a::<A>(); it would be `a::<A>`
     generic_function: ($) =>
@@ -1035,6 +1037,29 @@ module.exports = grammar({
     while_expression: ($) =>
       seq('while', field('condition', $._condition), field('body', $.block)),
 
+    // |x| { x + 1}
+    closure_expression: $ => prec(PREC.closure, seq(
+      optional('move'),
+      field('parameters', $.closure_parameters),
+      choice(
+        seq(
+          optional(seq('->', field('return_type', $._type))),
+          field('body', $.block),
+        ),
+        field('body', choice($.expression, '_')),
+      ),
+    )),
+
+    closure_parameters: $ => seq(
+      '|',
+      sepBy(',', choice(
+        $._pattern,
+        $.parameter,
+      )),
+      '|',
+    ),
+
+    // for x in a.iter()
     for_expression: $ => seq(
       'for',
       field('pattern', $._pattern),
