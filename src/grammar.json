@@ -3924,6 +3924,19 @@
       "type": "CHOICE",
       "members": [
         {
+          "type": "SYMBOL",
+          "name": "expression_except_range"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "range_expression"
+        }
+      ]
+    },
+    "expression_except_range": {
+      "type": "CHOICE",
+      "members": [
+        {
           "type": "PREC_LEFT",
           "value": 0,
           "content": {
@@ -4638,6 +4651,62 @@
         ]
       }
     },
+    "range_expression": {
+      "type": "PREC_LEFT",
+      "value": 1,
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "expression"
+              },
+              {
+                "type": "STRING",
+                "value": ".."
+              },
+              {
+                "type": "SYMBOL",
+                "name": "expression"
+              }
+            ]
+          },
+          {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "expression"
+              },
+              {
+                "type": "STRING",
+                "value": ".."
+              }
+            ]
+          },
+          {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": ".."
+              },
+              {
+                "type": "SYMBOL",
+                "name": "expression"
+              }
+            ]
+          },
+          {
+            "type": "STRING",
+            "value": ".."
+          }
+        ]
+      }
+    },
     "try_expression": {
       "type": "PREC",
       "value": 13,
@@ -5178,18 +5247,6 @@
       "content": {
         "type": "SEQ",
         "members": [
-          {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "STRING",
-                "value": "static"
-              },
-              {
-                "type": "BLANK"
-              }
-            ]
-          },
           {
             "type": "CHOICE",
             "members": [
@@ -5777,7 +5834,7 @@
             "name": "function",
             "content": {
               "type": "SYMBOL",
-              "name": "expression"
+              "name": "expression_except_range"
             }
           },
           {
@@ -6144,6 +6201,7 @@
   ],
   "supertypes": [
     "expression",
+    "expression_except_range",
     "_type",
     "_literal",
     "_literal_pattern",

@@ -230,6 +230,20 @@
     "named": true,
     "subtypes": [
       {
+        "type": "expression_except_range",
+        "named": true
+      },
+      {
+        "type": "range_expression",
+        "named": true
+      }
+    ]
+  },
+  {
+    "type": "expression_except_range",
+    "named": true,
+    "subtypes": [
+      {
         "type": "_literal",
         "named": true
       },
@@ -744,7 +758,7 @@
         "required": true,
         "types": [
           {
-            "type": "expression",
+            "type": "expression_except_range",
             "named": true
           }
         ]
@@ -762,6 +776,10 @@
           {
             "type": "_",
             "named": false
+          },
+          {
+            "type": "block",
+            "named": true
           },
           {
             "type": "expression",
@@ -1134,7 +1152,31 @@
       "required": true,
       "types": [
         {
+          "type": "block",
+          "named": true
+        },
+        {
           "type": "expression",
+          "named": true
+        },
+        {
+          "type": "for_expression",
+          "named": true
+        },
+        {
+          "type": "if_expression",
+          "named": true
+        },
+        {
+          "type": "loop_expression",
+          "named": true
+        },
+        {
+          "type": "match_expression",
+          "named": true
+        },
+        {
+          "type": "while_expression",
           "named": true
         }
       ]
@@ -1912,7 +1954,31 @@
         "required": true,
         "types": [
           {
+            "type": "block",
+            "named": true
+          },
+          {
             "type": "expression",
+            "named": true
+          },
+          {
+            "type": "for_expression",
+            "named": true
+          },
+          {
+            "type": "if_expression",
+            "named": true
+          },
+          {
+            "type": "loop_expression",
+            "named": true
+          },
+          {
+            "type": "match_expression",
+            "named": true
+          },
+          {
+            "type": "while_expression",
             "named": true
           }
         ]
@@ -2070,6 +2136,10 @@
         {
           "type": "expression",
           "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
         }
       ]
     }
@@ -2179,6 +2249,21 @@
     "children": {
       "multiple": false,
       "required": true,
+      "types": [
+        {
+          "type": "expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "range_expression",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
       "types": [
         {
           "type": "expression",
