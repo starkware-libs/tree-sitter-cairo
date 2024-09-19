@@ -12,6 +12,7 @@ const PREC = {
   comparative: 4,
   and: 3,
   or: 2,
+  range: 1,
   assign: 0,
   closure: -1,
 };
@@ -95,6 +96,7 @@ module.exports = grammar({
   ],
   supertypes: ($) => [
     $.expression,
+    $.expression_except_range,
     $._type,
     $._literal,
     $._literal_pattern,
@@ -587,10 +589,28 @@ module.exports = grammar({
         $.slice_pattern,
         $.macro_invocation,
         $.tuple_enum_pattern,
+        $.range_pattern,
         '_',
       ),
     // for example in let (a, b) = c; it would be `(a, b)`
     tuple_pattern: ($) => seq('(', sepBy(',', choice($._pattern, $.closure_expression)), optional(','), ')'),
+
+    range_pattern: $ => seq(
+      choice(
+        $._literal_pattern,
+        $._path,
+      ),
+      choice(
+        seq(
+          '..',
+          choice(
+            $._literal_pattern,
+            $._path,
+          ),
+        ),
+        '..',
+      ),
+    ),
 
     // for example in let [a, b] = c; it would be `[a, b]`
     slice_pattern: ($) => seq('[', sepBy(',', $._pattern), optional(','), ']'),
@@ -780,7 +800,13 @@ module.exports = grammar({
     expression_statement: ($) =>
       choice(seq($.expression, ';'), prec(1, $._expression_ending_with_block)),
 
-    expression: ($) =>
+
+    expression: $ => choice(
+      $.expression_except_range,
+      $.range_expression,
+    ),
+
+    expression_except_range: ($) =>
       choice(
         prec.left($.identifier),
         alias(choice(...primitiveTypes), $.identifier),
@@ -917,6 +943,14 @@ module.exports = grammar({
     // @1
     unary_expression: ($) =>
       prec(PREC.unary, seq(choice('-', '*', '!', '~', '@'), $.expression)),
+
+    range_expression: $ => prec.left(PREC.range, choice(
+      seq($.expression, '..', $.expression),
+      seq($.expression, '..'),
+      seq('..', $.expression),
+      '..',
+    )),
+
 
     // for example in let a = try_smth?; it would be `try_smth?`
     try_expression: ($) => prec(PREC.try, seq($.expression, '?')),
@@ -1106,7 +1140,7 @@ module.exports = grammar({
     call_expression: ($) =>
       prec(
         PREC.call,
-        seq(field('function', $.expression), field('arguments', $.arguments)),
+        seq(field('function', $.expression_except_range), field('arguments', $.arguments)),
       ),
     // for example in foo(a, b, c) it would be `(a, b, c)`
     arguments: ($) =>
