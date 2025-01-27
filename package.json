@@ -22,7 +22,7 @@
     "queries/*",
     "src/**"
   ],
-  "author": "LucasLvy",
+  "author": "0xLucqs",
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/starkware-libs/tree-sitter-cairo/issues"
