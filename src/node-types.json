@@ -994,15 +994,7 @@
       "required": false,
       "types": [
         {
-          "type": "generic_type",
-          "named": true
-        },
-        {
-          "type": "generic_type_with_turbofish",
-          "named": true
-        },
-        {
-          "type": "type_identifier",
+          "type": "_type",
           "named": true
         }
       ]
@@ -3265,10 +3257,6 @@
   },
   {
     "type": ":",
-    "named": false
-  },
-  {
-    "type": ": ",
     "named": false
   },
   {
