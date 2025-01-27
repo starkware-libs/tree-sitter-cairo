@@ -1093,7 +1093,7 @@ module.exports = grammar({
       sepBy(',', choice(
         $._pattern,
         $.parameter,
-      )),
+      )), optional(','),
       '|',
     ),
 
