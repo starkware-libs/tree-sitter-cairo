@@ -56,12 +56,6 @@
     "parse": "tree-sitter parse",
     "test": "tree-sitter test"
   },
-  "tree-sitter": [
-    {
-      "scope": "source.cairo",
-      "injection-regex": "^cairo$"
-    }
-  ],
   "eslintConfig": {
     "env": {
       "commonjs": true,

@@ -1,4 +1,5 @@
 {
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/grammar.schema.json",
   "name": "cairo",
   "rules": {
     "source_file": {
@@ -2161,6 +2162,47 @@
                   "name": "generic_type_with_turbofish"
                 }
               ]
+            },
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SEQ",
+                  "members": [
+                    {
+                      "type": "STRING",
+                      "value": "["
+                    },
+                    {
+                      "type": "REPEAT",
+                      "content": {
+                        "type": "SEQ",
+                        "members": [
+                          {
+                            "type": "SYMBOL",
+                            "name": "_type_identifier"
+                          },
+                          {
+                            "type": "STRING",
+                            "value": ": "
+                          },
+                          {
+                            "type": "SYMBOL",
+                            "name": "_type_identifier"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "STRING",
+                      "value": "]"
+                    }
+                  ]
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
             }
           ]
         }
@@ -2840,6 +2882,10 @@
           "name": "tuple_enum_pattern"
         },
         {
+          "type": "SYMBOL",
+          "name": "range_pattern"
+        },
+        {
           "type": "STRING",
           "value": "_"
         }
@@ -2918,6 +2964,55 @@
         {
           "type": "STRING",
           "value": ")"
+        }
+      ]
+    },
+    "range_pattern": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_literal_pattern"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "_path"
+            }
+          ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": ".."
+                },
+                {
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "SYMBOL",
+                      "name": "_literal_pattern"
+                    },
+                    {
+                      "type": "SYMBOL",
+                      "name": "_path"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "STRING",
+              "value": ".."
+            }
+          ]
         }
       ]
     },
@@ -4346,13 +4441,8 @@
       "type": "PREC_LEFT",
       "value": 0,
       "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "STRING",
-            "value": "continue"
-          }
-        ]
+        "type": "STRING",
+        "value": "continue"
       }
     },
     "index_expression": {

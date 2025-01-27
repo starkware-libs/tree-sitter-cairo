@@ -471,7 +471,7 @@ module.exports = grammar({
       seq('const', field('name', $.identifier), ':', field('type', $._type)),
 
     // for example in impl ArraySerde<T, +Serde<T>, impl TDrop: Drop<T>> of Serde<Array<T>> {} it would be
-    // `+Serde<T>` and `impl TDrop: Drop<T>`
+    // `+Serde<T>` and `impl TDrop: Drop<T>`. Can also have a constrained associated type like that `+Iterator<I>[Item: T]`
     constrained_type_parameter: ($) =>
       choice(
         seq(
@@ -485,6 +485,7 @@ module.exports = grammar({
             $._type_identifier,
             $.generic_type_with_turbofish,
           ),
+          optional(seq('[', repeat(seq($._type_identifier, ': ', $._type_identifier)), ']'))
         ),
       ),
     // in let a: Array<T>; it would be `Array<T>`
@@ -891,7 +892,7 @@ module.exports = grammar({
     break_expression: ($) => prec.left(seq('break', optional($.expression))),
 
     // continue
-    continue_expression: ($) => prec.left(seq('continue')),
+    continue_expression: ($) => prec.left('continue'),
 
     // a[i]
     index_expression: ($) =>
