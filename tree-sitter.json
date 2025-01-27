@@ -1,0 +1,33 @@
+{
+  "grammars": [
+    {
+      "name": "cairo",
+      "camelcase": "Cairo",
+      "scope": "source.cairo",
+      "path": ".",
+      "file-types": null,
+      "injection-regex": "^cairo$"
+    }
+  ],
+  "metadata": {
+    "version": "0.0.1",
+    "license": "Apache-2.0",
+    "description": "Cairo grammar for tree-sitter",
+    "authors": [
+      {
+        "name": "0xLucqs"
+      }
+    ],
+    "links": {
+      "repository": "git+https://github.com/starkware-libs/tree-sitter-cairo.git"
+    }
+  },
+  "bindings": {
+    "c": true,
+    "go": true,
+    "node": true,
+    "python": true,
+    "rust": true,
+    "swift": true
+  }
+}

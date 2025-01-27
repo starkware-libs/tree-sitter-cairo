@@ -158,6 +158,10 @@
         "named": true
       },
       {
+        "type": "range_pattern",
+        "named": true
+      },
+      {
         "type": "scoped_identifier",
         "named": true
       },
@@ -986,19 +990,11 @@
       }
     },
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": false,
       "types": [
         {
-          "type": "generic_type",
-          "named": true
-        },
-        {
-          "type": "generic_type_with_turbofish",
-          "named": true
-        },
-        {
-          "type": "type_identifier",
+          "type": "_type",
           "named": true
         }
       ]
@@ -2273,6 +2269,33 @@
     }
   },
   {
+    "type": "range_pattern",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "_literal_pattern",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "scoped_identifier",
+          "named": true
+        },
+        {
+          "type": "super",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "ref_specifier",
     "named": true,
     "fields": {}
@@ -2485,6 +2508,7 @@
   {
     "type": "source_file",
     "named": true,
+    "root": true,
     "fields": {},
     "children": {
       "multiple": true,

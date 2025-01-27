@@ -22,7 +22,7 @@
     "queries/*",
     "src/**"
   ],
-  "author": "LucasLvy",
+  "author": "0xLucqs",
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/starkware-libs/tree-sitter-cairo/issues"
@@ -56,12 +56,6 @@
     "parse": "tree-sitter parse",
     "test": "tree-sitter test"
   },
-  "tree-sitter": [
-    {
-      "scope": "source.cairo",
-      "injection-regex": "^cairo$"
-    }
-  ],
   "eslintConfig": {
     "env": {
       "commonjs": true,

@@ -338,6 +338,7 @@ module.exports = grammar({
     // Helper for function definition
     function: ($) =>
       seq(
+        optional('const'),
         'fn',
         field('name', $.identifier),
         field('type_parameters', optional($.type_parameters)),
@@ -471,21 +472,24 @@ module.exports = grammar({
       seq('const', field('name', $.identifier), ':', field('type', $._type)),
 
     // for example in impl ArraySerde<T, +Serde<T>, impl TDrop: Drop<T>> of Serde<Array<T>> {} it would be
-    // `+Serde<T>` and `impl TDrop: Drop<T>`
+    // `+Serde<T>` and `impl TDrop: Drop<T>`. Can also have a constrained associated type like that `+Iterator<I>[Item: T]`
     constrained_type_parameter: ($) =>
-      choice(
-        seq(
-          field('left', seq('impl', $._type_identifier, ':')),
-          field('bound', $._type),
-        ),
-        seq(
-          choice('+', '-'),
-          choice(
-            $.generic_type,
-            $._type_identifier,
-            $.generic_type_with_turbofish,
+      seq(
+        choice(
+          seq(
+            field('left', seq('impl', $._type_identifier, ':')),
+            field('bound', $._type),
+          ),
+          seq(
+            choice('+', '-'),
+            choice(
+              $.generic_type,
+              $._type_identifier,
+              $.generic_type_with_turbofish,
+            ),
           ),
         ),
+        optional(seq('[', repeat(seq($._type_identifier, ':', $._type)), ']')),
       ),
     // in let a: Array<T>; it would be `Array<T>`
     generic_type: ($) =>
@@ -891,7 +895,7 @@ module.exports = grammar({
     break_expression: ($) => prec.left(seq('break', optional($.expression))),
 
     // continue
-    continue_expression: ($) => prec.left(seq('continue')),
+    continue_expression: ($) => prec.left('continue'),
 
     // a[i]
     index_expression: ($) =>
@@ -1089,7 +1093,7 @@ module.exports = grammar({
       sepBy(',', choice(
         $._pattern,
         $.parameter,
-      )),
+      )), optional(','),
       '|',
     ),
 
