@@ -338,6 +338,7 @@ module.exports = grammar({
     // Helper for function definition
     function: ($) =>
       seq(
+        optional('const'),
         'fn',
         field('name', $.identifier),
         field('type_parameters', optional($.type_parameters)),
@@ -485,7 +486,7 @@ module.exports = grammar({
             $._type_identifier,
             $.generic_type_with_turbofish,
           ),
-          optional(seq('[', repeat(seq($._type_identifier, ': ', $._type_identifier)), ']'))
+          optional(seq('[', repeat(seq($._type_identifier, ': ', $._type_identifier)), ']')),
         ),
       ),
     // in let a: Array<T>; it would be `Array<T>`
