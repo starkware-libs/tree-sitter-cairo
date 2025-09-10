@@ -2118,10 +2118,6 @@
                           },
                           {
                             "type": "SYMBOL",
-                            "name": "_type_identifier"
-                          },
-                          {
-                            "type": "SYMBOL",
                             "name": "constrained_type_parameter"
                           },
                           {
@@ -2165,10 +2161,6 @@
                                 {
                                   "type": "SYMBOL",
                                   "name": "generic_type_with_turbofish"
-                                },
-                                {
-                                  "type": "SYMBOL",
-                                  "name": "_type_identifier"
                                 },
                                 {
                                   "type": "SYMBOL",
@@ -2310,6 +2302,10 @@
                     {
                       "type": "SYMBOL",
                       "name": "generic_type_with_turbofish"
+                    },
+                    {
+                      "type": "SYMBOL",
+                      "name": "scoped_type_identifier"
                     }
                   ]
                 }
