@@ -863,7 +863,6 @@ module.exports = grammar({
         $.call_expression,
         $._expression_ending_with_block,
         $._literal,
-        $.reference_expression,
         $.field_expression,
         $.scoped_identifier,
         $.tuple_expression,
@@ -1072,7 +1071,7 @@ module.exports = grammar({
     // }
     // it would be Result::Err(_) => Option::None(())
     last_match_arm: ($) => seq($.match_arm_content, optional(',')),
-    
+
     // Option::Some(a) => a
     // and
     // Option::None => 0
@@ -1189,20 +1188,17 @@ module.exports = grammar({
         '(',
         sepBy(
           ',',
-          seq(repeat($.attribute_item), choice($.expression, $.named_argument)),
+          seq(
+            repeat($.attribute_item),
+            optional($.ref_specifier),
+            choice($.expression, $.named_argument),
+          ),
         ),
         optional(','),
         ')',
       ),
     // for example in foo(bar: a, :b, :c) it would be `bar: a` and `:b`  and `c`
     named_argument: ($) => seq(optional($.identifier), ':', $.expression),
-
-    // for example in foo(ref b) it would be `ref b`
-    reference_expression: ($) =>
-      prec(
-        PREC.unary,
-        seq('ref', optional($.mutable_specifier), field('value', $.expression)),
-      ),
 
     // Helper alias
     _type_identifier: ($) => alias($.identifier, $.type_identifier),

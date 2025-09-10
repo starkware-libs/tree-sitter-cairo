@@ -4416,10 +4416,6 @@
         },
         {
           "type": "SYMBOL",
-          "name": "reference_expression"
-        },
-        {
-          "type": "SYMBOL",
           "name": "field_expression"
         },
         {
@@ -6218,6 +6214,18 @@
                       "members": [
                         {
                           "type": "SYMBOL",
+                          "name": "ref_specifier"
+                        },
+                        {
+                          "type": "BLANK"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "CHOICE",
+                      "members": [
+                        {
+                          "type": "SYMBOL",
                           "name": "expression"
                         },
                         {
@@ -6246,6 +6254,18 @@
                               "type": "SYMBOL",
                               "name": "attribute_item"
                             }
+                          },
+                          {
+                            "type": "CHOICE",
+                            "members": [
+                              {
+                                "type": "SYMBOL",
+                                "name": "ref_specifier"
+                              },
+                              {
+                                "type": "BLANK"
+                              }
+                            ]
                           },
                           {
                             "type": "CHOICE",
@@ -6314,39 +6334,6 @@
           "name": "expression"
         }
       ]
-    },
-    "reference_expression": {
-      "type": "PREC",
-      "value": 12,
-      "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "STRING",
-            "value": "ref"
-          },
-          {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "mutable_specifier"
-              },
-              {
-                "type": "BLANK"
-              }
-            ]
-          },
-          {
-            "type": "FIELD",
-            "name": "value",
-            "content": {
-              "type": "SYMBOL",
-              "name": "expression"
-            }
-          }
-        ]
-      }
     },
     "_type_identifier": {
       "type": "ALIAS",

@@ -332,10 +332,6 @@
         "named": true
       },
       {
-        "type": "reference_expression",
-        "named": true
-      },
-      {
         "type": "return_expression",
         "named": true
       },
@@ -387,6 +383,10 @@
         },
         {
           "type": "named_argument",
+          "named": true
+        },
+        {
+          "type": "ref_specifier",
           "named": true
         }
       ]
@@ -2378,37 +2378,6 @@
     }
   },
   {
-    "type": "ref_specifier",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "reference_expression",
-    "named": true,
-    "fields": {
-      "value": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "expression",
-            "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": false,
-      "required": false,
-      "types": [
-        {
-          "type": "mutable_specifier",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "return_expression",
     "named": true,
     "fields": {},
@@ -3543,8 +3512,8 @@
     "named": false
   },
   {
-    "type": "ref",
-    "named": false
+    "type": "ref_specifier",
+    "named": true
   },
   {
     "type": "return",
