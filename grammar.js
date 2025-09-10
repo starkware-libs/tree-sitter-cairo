@@ -358,7 +358,9 @@ module.exports = grammar({
         optional($.mutable_specifier),
         field('pattern', $._pattern),
         optional(seq(':', field('type', $._type))),
-        optional(seq('=', field('value', $.expression))),
+        '=',
+        field('value', $.expression),
+        optional(seq('else', field('else_block', $.block))),
         ';',
       ),
 

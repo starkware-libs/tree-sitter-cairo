@@ -1346,6 +1346,18 @@
           ]
         },
         {
+          "type": "STRING",
+          "value": "="
+        },
+        {
+          "type": "FIELD",
+          "name": "value",
+          "content": {
+            "type": "SYMBOL",
+            "name": "expression"
+          }
+        },
+        {
           "type": "CHOICE",
           "members": [
             {
@@ -1353,14 +1365,14 @@
               "members": [
                 {
                   "type": "STRING",
-                  "value": "="
+                  "value": "else"
                 },
                 {
                   "type": "FIELD",
-                  "name": "value",
+                  "name": "else_block",
                   "content": {
                     "type": "SYMBOL",
-                    "name": "expression"
+                    "name": "block"
                   }
                 }
               ]
