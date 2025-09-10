@@ -159,7 +159,7 @@
 
 [
   "const"
-  "ref"
+  (ref_specifier)
 ] @keyword.storage.modifier
 
 ; TODO: variable.mut to highlight mutable identifiers via locals.scm

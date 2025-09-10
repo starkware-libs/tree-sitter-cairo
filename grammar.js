@@ -1193,7 +1193,7 @@ module.exports = grammar({
     _type_identifier: ($) => alias($.identifier, $.type_identifier),
 
     // General helpers
-    identifier: ($) => choice(...primitiveTypes, /[a-zA-Z_][a-zA-Z0-9_]*/),
+    identifier: ($) => choice(alias(choice(...primitiveTypes), $.primitive_type), /[a-zA-Z_][a-zA-Z0-9_]*/),
     // keywords
     visibility_modifier: ($) =>
       prec(
