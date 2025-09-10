@@ -450,7 +450,7 @@ module.exports = grammar({
         1,
         seq(
           '<',
-          sepBy1(
+          sepBy(
             ',',
             seq(
               repeat($.attribute_item),
@@ -797,7 +797,7 @@ module.exports = grammar({
     type_arguments: ($) =>
       seq(
         token(prec(1, '<')),
-        sepBy1(',', seq(choice($._type, $._literal, $.block))),
+        sepBy(',', seq(choice($._type, $._literal, $.block))),
         optional(','),
         '>',
       ),
