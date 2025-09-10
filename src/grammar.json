@@ -1919,144 +1919,12 @@
         {
           "type": "SYMBOL",
           "name": "macro_invocation"
-        },
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "STRING",
-                "value": "u8"
-              },
-              {
-                "type": "STRING",
-                "value": "i8"
-              },
-              {
-                "type": "STRING",
-                "value": "u16"
-              },
-              {
-                "type": "STRING",
-                "value": "i16"
-              },
-              {
-                "type": "STRING",
-                "value": "u32"
-              },
-              {
-                "type": "STRING",
-                "value": "i32"
-              },
-              {
-                "type": "STRING",
-                "value": "u64"
-              },
-              {
-                "type": "STRING",
-                "value": "i64"
-              },
-              {
-                "type": "STRING",
-                "value": "u128"
-              },
-              {
-                "type": "STRING",
-                "value": "i128"
-              },
-              {
-                "type": "STRING",
-                "value": "usize"
-              },
-              {
-                "type": "STRING",
-                "value": "bool"
-              },
-              {
-                "type": "STRING",
-                "value": "ByteArray"
-              },
-              {
-                "type": "STRING",
-                "value": "felt252"
-              }
-            ]
-          },
-          "named": true,
-          "value": "primitive_type"
         }
       ]
     },
     "_path": {
       "type": "CHOICE",
       "members": [
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "STRING",
-                "value": "u8"
-              },
-              {
-                "type": "STRING",
-                "value": "i8"
-              },
-              {
-                "type": "STRING",
-                "value": "u16"
-              },
-              {
-                "type": "STRING",
-                "value": "i16"
-              },
-              {
-                "type": "STRING",
-                "value": "u32"
-              },
-              {
-                "type": "STRING",
-                "value": "i32"
-              },
-              {
-                "type": "STRING",
-                "value": "u64"
-              },
-              {
-                "type": "STRING",
-                "value": "i64"
-              },
-              {
-                "type": "STRING",
-                "value": "u128"
-              },
-              {
-                "type": "STRING",
-                "value": "i128"
-              },
-              {
-                "type": "STRING",
-                "value": "usize"
-              },
-              {
-                "type": "STRING",
-                "value": "bool"
-              },
-              {
-                "type": "STRING",
-                "value": "ByteArray"
-              },
-              {
-                "type": "STRING",
-                "value": "felt252"
-              }
-            ]
-          },
-          "named": true,
-          "value": "identifier"
-        },
         {
           "type": "SYMBOL",
           "name": "super"
@@ -2581,72 +2449,6 @@
           "name": "super"
         },
         {
-          "type": "ALIAS",
-          "content": {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "STRING",
-                "value": "u8"
-              },
-              {
-                "type": "STRING",
-                "value": "i8"
-              },
-              {
-                "type": "STRING",
-                "value": "u16"
-              },
-              {
-                "type": "STRING",
-                "value": "i16"
-              },
-              {
-                "type": "STRING",
-                "value": "u32"
-              },
-              {
-                "type": "STRING",
-                "value": "i32"
-              },
-              {
-                "type": "STRING",
-                "value": "u64"
-              },
-              {
-                "type": "STRING",
-                "value": "i64"
-              },
-              {
-                "type": "STRING",
-                "value": "u128"
-              },
-              {
-                "type": "STRING",
-                "value": "i128"
-              },
-              {
-                "type": "STRING",
-                "value": "usize"
-              },
-              {
-                "type": "STRING",
-                "value": "bool"
-              },
-              {
-                "type": "STRING",
-                "value": "ByteArray"
-              },
-              {
-                "type": "STRING",
-                "value": "felt252"
-              }
-            ]
-          },
-          "named": true,
-          "value": "primitive_type"
-        },
-        {
           "type": "PREC_RIGHT",
           "value": 0,
           "content": {
@@ -2926,72 +2728,6 @@
         {
           "type": "SYMBOL",
           "name": "_literal_pattern"
-        },
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "STRING",
-                "value": "u8"
-              },
-              {
-                "type": "STRING",
-                "value": "i8"
-              },
-              {
-                "type": "STRING",
-                "value": "u16"
-              },
-              {
-                "type": "STRING",
-                "value": "i16"
-              },
-              {
-                "type": "STRING",
-                "value": "u32"
-              },
-              {
-                "type": "STRING",
-                "value": "i32"
-              },
-              {
-                "type": "STRING",
-                "value": "u64"
-              },
-              {
-                "type": "STRING",
-                "value": "i64"
-              },
-              {
-                "type": "STRING",
-                "value": "u128"
-              },
-              {
-                "type": "STRING",
-                "value": "i128"
-              },
-              {
-                "type": "STRING",
-                "value": "usize"
-              },
-              {
-                "type": "STRING",
-                "value": "bool"
-              },
-              {
-                "type": "STRING",
-                "value": "ByteArray"
-              },
-              {
-                "type": "STRING",
-                "value": "felt252"
-              }
-            ]
-          },
-          "named": true,
-          "value": "identifier"
         },
         {
           "type": "SYMBOL",
@@ -3699,11 +3435,11 @@
                       "members": [
                         {
                           "type": "STRING",
-                          "value": "u8"
+                          "value": "felt252"
                         },
                         {
                           "type": "STRING",
-                          "value": "i8"
+                          "value": "u8"
                         },
                         {
                           "type": "STRING",
@@ -3711,15 +3447,7 @@
                         },
                         {
                           "type": "STRING",
-                          "value": "i16"
-                        },
-                        {
-                          "type": "STRING",
                           "value": "u32"
-                        },
-                        {
-                          "type": "STRING",
-                          "value": "i32"
                         },
                         {
                           "type": "STRING",
@@ -3727,11 +3455,27 @@
                         },
                         {
                           "type": "STRING",
-                          "value": "i64"
+                          "value": "u128"
                         },
                         {
                           "type": "STRING",
-                          "value": "u128"
+                          "value": "u256"
+                        },
+                        {
+                          "type": "STRING",
+                          "value": "i8"
+                        },
+                        {
+                          "type": "STRING",
+                          "value": "i16"
+                        },
+                        {
+                          "type": "STRING",
+                          "value": "i32"
+                        },
+                        {
+                          "type": "STRING",
+                          "value": "i64"
                         },
                         {
                           "type": "STRING",
@@ -3740,14 +3484,6 @@
                         {
                           "type": "STRING",
                           "value": "usize"
-                        },
-                        {
-                          "type": "STRING",
-                          "value": "u256"
-                        },
-                        {
-                          "type": "STRING",
-                          "value": "felt252"
                         }
                       ]
                     }
@@ -3821,11 +3557,11 @@
                       "members": [
                         {
                           "type": "STRING",
-                          "value": "u8"
+                          "value": "felt252"
                         },
                         {
                           "type": "STRING",
-                          "value": "i8"
+                          "value": "u8"
                         },
                         {
                           "type": "STRING",
@@ -3833,15 +3569,7 @@
                         },
                         {
                           "type": "STRING",
-                          "value": "i16"
-                        },
-                        {
-                          "type": "STRING",
                           "value": "u32"
-                        },
-                        {
-                          "type": "STRING",
-                          "value": "i32"
                         },
                         {
                           "type": "STRING",
@@ -3849,11 +3577,27 @@
                         },
                         {
                           "type": "STRING",
-                          "value": "i64"
+                          "value": "u128"
                         },
                         {
                           "type": "STRING",
-                          "value": "u128"
+                          "value": "u256"
+                        },
+                        {
+                          "type": "STRING",
+                          "value": "i8"
+                        },
+                        {
+                          "type": "STRING",
+                          "value": "i16"
+                        },
+                        {
+                          "type": "STRING",
+                          "value": "i32"
+                        },
+                        {
+                          "type": "STRING",
+                          "value": "i64"
                         },
                         {
                           "type": "STRING",
@@ -3862,14 +3606,6 @@
                         {
                           "type": "STRING",
                           "value": "usize"
-                        },
-                        {
-                          "type": "STRING",
-                          "value": "u256"
-                        },
-                        {
-                          "type": "STRING",
-                          "value": "felt252"
                         }
                       ]
                     }
@@ -4323,72 +4059,6 @@
             "type": "SYMBOL",
             "name": "identifier"
           }
-        },
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "STRING",
-                "value": "u8"
-              },
-              {
-                "type": "STRING",
-                "value": "i8"
-              },
-              {
-                "type": "STRING",
-                "value": "u16"
-              },
-              {
-                "type": "STRING",
-                "value": "i16"
-              },
-              {
-                "type": "STRING",
-                "value": "u32"
-              },
-              {
-                "type": "STRING",
-                "value": "i32"
-              },
-              {
-                "type": "STRING",
-                "value": "u64"
-              },
-              {
-                "type": "STRING",
-                "value": "i64"
-              },
-              {
-                "type": "STRING",
-                "value": "u128"
-              },
-              {
-                "type": "STRING",
-                "value": "i128"
-              },
-              {
-                "type": "STRING",
-                "value": "usize"
-              },
-              {
-                "type": "STRING",
-                "value": "bool"
-              },
-              {
-                "type": "STRING",
-                "value": "ByteArray"
-              },
-              {
-                "type": "STRING",
-                "value": "felt252"
-              }
-            ]
-          },
-          "named": true,
-          "value": "identifier"
         },
         {
           "type": "PREC_LEFT",
@@ -6345,8 +6015,73 @@
       "value": "type_identifier"
     },
     "identifier": {
-      "type": "PATTERN",
-      "value": "[a-zA-Z_][a-zA-Z0-9_]*"
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "felt252"
+        },
+        {
+          "type": "STRING",
+          "value": "u8"
+        },
+        {
+          "type": "STRING",
+          "value": "u16"
+        },
+        {
+          "type": "STRING",
+          "value": "u32"
+        },
+        {
+          "type": "STRING",
+          "value": "u64"
+        },
+        {
+          "type": "STRING",
+          "value": "u128"
+        },
+        {
+          "type": "STRING",
+          "value": "u256"
+        },
+        {
+          "type": "STRING",
+          "value": "i8"
+        },
+        {
+          "type": "STRING",
+          "value": "i16"
+        },
+        {
+          "type": "STRING",
+          "value": "i32"
+        },
+        {
+          "type": "STRING",
+          "value": "i64"
+        },
+        {
+          "type": "STRING",
+          "value": "i128"
+        },
+        {
+          "type": "STRING",
+          "value": "usize"
+        },
+        {
+          "type": "STRING",
+          "value": "bool"
+        },
+        {
+          "type": "STRING",
+          "value": "ByteArray"
+        },
+        {
+          "type": "PATTERN",
+          "value": "[a-zA-Z_][a-zA-Z0-9_]*"
+        }
+      ]
     },
     "visibility_modifier": {
       "type": "PREC",

@@ -61,19 +61,21 @@ const TOKEN_TREE_NON_SPECIAL_PUNCTUATION = [
 ];
 
 const integerTypes = [
+  'felt252',
   'u8',
-  'i8',
   'u16',
-  'i16',
   'u32',
-  'i32',
   'u64',
-  'i64',
   'u128',
+  'u256',
+  'i8',
+  'i16',
+  'i32',
+  'i64',
   'i128',
   'usize',
 ];
-const primitiveTypes = integerTypes.concat(['bool', 'ByteArray', 'felt252']);
+const primitiveTypes = integerTypes.concat(['bool', 'ByteArray']);
 module.exports = grammar({
   name: 'cairo',
 
@@ -463,13 +465,11 @@ module.exports = grammar({
         $.array_type,
         $._type_identifier,
         $.macro_invocation,
-        alias(choice(...primitiveTypes), $.primitive_type),
       ),
 
     // Helper
     _path: ($) =>
       choice(
-        alias(choice(...primitiveTypes), $.identifier),
         $.super,
         $.identifier,
         $.scoped_identifier,
@@ -585,7 +585,6 @@ module.exports = grammar({
         $.identifier,
         $.mutable_specifier,
         $.super,
-        alias(choice(...primitiveTypes), $.primitive_type),
         prec.right(repeat1(choice(...TOKEN_TREE_NON_SPECIAL_PUNCTUATION))),
         'break',
         'const',
@@ -617,7 +616,6 @@ module.exports = grammar({
     _pattern: ($) =>
       choice(
         $._literal_pattern,
-        alias(choice(...primitiveTypes), $.identifier),
         $.identifier,
         $.scoped_identifier,
         $.tuple_pattern,
@@ -749,11 +747,7 @@ module.exports = grammar({
       token(
         seq(
           choice(/[0-9_]+/, /0x[0-9a-fA-F_]+/, /0b[01_]+/, /0o[0-7_]+/),
-          optional(
-            token.immediate(
-              seq('_', choice(...integerTypes, 'u256', 'felt252')),
-            ),
-          ),
+          optional(token.immediate(seq('_', choice(...integerTypes)))),
         ),
       ),
 
@@ -762,15 +756,11 @@ module.exports = grammar({
       seq(alias(/[bc]?"/, '"'), /([^"\\]|\\.)*/, token.immediate('"')),
 
     // allows every ascii char except `"` unless it's escaped (accept escape sequences also). Max length is 31
-    shortstring_literal: ($) =>
+    shortstring_literal: (_) =>
       token(
         seq(
           '\'', /(([^'\\]|\\.)*)/, '\'',
-          optional(
-            token.immediate(
-              seq('_', choice(...integerTypes, 'u256', 'felt252')),
-            ),
-          ),
+          optional(token.immediate(seq('_', choice(...integerTypes)))),
         ),
       ),
 
@@ -857,7 +847,6 @@ module.exports = grammar({
     expression_except_range: ($) =>
       choice(
         prec.left($.identifier),
-        alias(choice(...primitiveTypes), $.identifier),
         prec.left($._reserved_identifier),
         $.binary_expression,
         $.call_expression,
@@ -1204,7 +1193,7 @@ module.exports = grammar({
     _type_identifier: ($) => alias($.identifier, $.type_identifier),
 
     // General helpers
-    identifier: ($) => /[a-zA-Z_][a-zA-Z0-9_]*/,
+    identifier: ($) => choice(...primitiveTypes, /[a-zA-Z_][a-zA-Z0-9_]*/),
     // keywords
     visibility_modifier: ($) =>
       prec(

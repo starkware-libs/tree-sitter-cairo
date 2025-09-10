@@ -208,10 +208,6 @@
         "named": true
       },
       {
-        "type": "primitive_type",
-        "named": true
-      },
-      {
         "type": "scoped_type_identifier",
         "named": true
       },
@@ -1336,6 +1332,11 @@
     }
   },
   {
+    "type": "field_identifier",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "field_initializer",
     "named": true,
     "fields": {
@@ -1702,6 +1703,11 @@
         ]
       }
     }
+  },
+  {
+    "type": "identifier",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "if_expression",
@@ -2507,6 +2513,11 @@
     }
   },
   {
+    "type": "shorthand_field_identifier",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "shorthand_field_initializer",
     "named": true,
     "fields": {},
@@ -2712,10 +2723,6 @@
           "named": true
         },
         {
-          "type": "primitive_type",
-          "named": true
-        },
-        {
           "type": "super",
           "named": true
         },
@@ -2900,6 +2907,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "type_identifier",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "type_item",
@@ -3367,6 +3379,10 @@
     "named": false
   },
   {
+    "type": "ByteArray",
+    "named": false
+  },
+  {
     "type": "[",
     "named": false
   },
@@ -3388,6 +3404,10 @@
   },
   {
     "type": "as",
+    "named": false
+  },
+  {
+    "type": "bool",
     "named": false
   },
   {
@@ -3427,8 +3447,8 @@
     "named": false
   },
   {
-    "type": "field_identifier",
-    "named": true
+    "type": "felt252",
+    "named": false
   },
   {
     "type": "fn",
@@ -3439,8 +3459,24 @@
     "named": false
   },
   {
-    "type": "identifier",
-    "named": true
+    "type": "i128",
+    "named": false
+  },
+  {
+    "type": "i16",
+    "named": false
+  },
+  {
+    "type": "i32",
+    "named": false
+  },
+  {
+    "type": "i64",
+    "named": false
+  },
+  {
+    "type": "i8",
+    "named": false
   },
   {
     "type": "if",
@@ -3504,10 +3540,6 @@
     "named": false
   },
   {
-    "type": "primitive_type",
-    "named": true
-  },
-  {
     "type": "pub",
     "named": false
   },
@@ -3518,10 +3550,6 @@
   {
     "type": "return",
     "named": false
-  },
-  {
-    "type": "shorthand_field_identifier",
-    "named": true
   },
   {
     "type": "shortstring_literal",
@@ -3552,11 +3580,35 @@
     "named": false
   },
   {
-    "type": "type_identifier",
-    "named": true
+    "type": "u128",
+    "named": false
+  },
+  {
+    "type": "u16",
+    "named": false
+  },
+  {
+    "type": "u256",
+    "named": false
+  },
+  {
+    "type": "u32",
+    "named": false
+  },
+  {
+    "type": "u64",
+    "named": false
+  },
+  {
+    "type": "u8",
+    "named": false
   },
   {
     "type": "use",
+    "named": false
+  },
+  {
+    "type": "usize",
     "named": false
   },
   {
