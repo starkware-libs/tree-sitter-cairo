@@ -2852,6 +2852,10 @@
         {
           "type": "block",
           "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
         }
       ]
     }
