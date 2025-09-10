@@ -660,7 +660,7 @@ module.exports = grammar({
         field('type', choice($._type_identifier, $.scoped_type_identifier)),
         '{',
         sepBy(',', $.field_pattern),
-        optional(','),
+        optional(choice(',', seq(',', '..'))),
         '}',
       ),
     // for example in let Foo { a: bar, b: baz } = c; it would be `a: bar` and `b: baz`
@@ -1064,31 +1064,24 @@ module.exports = grammar({
     // Option::Some(a) => a,
     // and
     // Option::None => 0,
-    match_arm: ($) =>
-      prec.right(
-        seq(
-          repeat(choice($.attribute_item, $.inner_attribute_item)),
-          field('pattern', $.match_pattern),
-          '=>',
-          choice(
-            seq(field('value', $.expression), ','),
-            field('value', prec(1, $._expression_ending_with_block)),
-          ),
-        ),
-      ),
+    match_arm: ($) => prec.right(seq($.match_arm_content, ',')),
     // for example in
     // match u256_guarantee_inv_mod_n(a, n) {
     //     Result::Ok((inv_a, _, _, _, _, _, _, _, _)) => Option::Some(inv_a),
     //     Result::Err(_) => Option::None(())
     // }
     // it would be Result::Err(_) => Option::None(())
-    last_match_arm: ($) =>
+    last_match_arm: ($) => seq($.match_arm_content, optional(',')),
+    
+    // Option::Some(a) => a
+    // and
+    // Option::None => 0
+    match_arm_content: ($) =>
       seq(
         repeat(choice($.attribute_item, $.inner_attribute_item)),
         field('pattern', $.match_pattern),
         '=>',
         field('value', $.expression),
-        optional(','),
       ),
 
     // Option::Some(1)

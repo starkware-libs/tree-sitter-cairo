@@ -2025,6 +2025,21 @@
   {
     "type": "match_arm",
     "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "match_arm_content",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "match_arm_content",
+    "named": true,
     "fields": {
       "pattern": {
         "multiple": false,
@@ -2041,31 +2056,7 @@
         "required": true,
         "types": [
           {
-            "type": "block",
-            "named": true
-          },
-          {
             "type": "expression",
-            "named": true
-          },
-          {
-            "type": "for_expression",
-            "named": true
-          },
-          {
-            "type": "if_expression",
-            "named": true
-          },
-          {
-            "type": "loop_expression",
-            "named": true
-          },
-          {
-            "type": "match_expression",
-            "named": true
-          },
-          {
-            "type": "while_expression",
             "named": true
           }
         ]
