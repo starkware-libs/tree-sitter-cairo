@@ -111,6 +111,7 @@ module.exports = grammar({
     _declaration_statement: ($) =>
       choice(
         $.const_item,
+        $.macro_declaration,
         $.macro_invocation,
         $.empty_statement,
         $.attribute_item,
@@ -205,6 +206,37 @@ module.exports = grammar({
         ),
         '!',
         alias($.delim_token_tree, $.token_tree),
+      ),
+
+    // macro_rules! name { patterns }
+    macro_declaration: ($) =>
+      prec(
+        2,
+        seq(
+          optional($.visibility_modifier),
+          'macro',
+          field('name', $.identifier),
+          field('body', $.macro_body),
+        ),
+      ),
+
+    // { pattern1 => expansion1; pattern2 => expansion2; }
+    macro_body: ($) =>
+      seq(
+        '{',
+        repeat($.macro_rule),
+        '}',
+      ),
+
+    // pattern => expansion;
+    macro_rule: ($) =>
+      seq(
+        field('pattern', alias($.delim_token_tree, $.token_tree)),
+        '=>',
+        '{',
+        field('expansion', alias(repeat($._delim_tokens), $.token_tree)),
+        '}',
+        ';',
       ),
 
     empty_statement: (_) => ';',
@@ -564,6 +596,7 @@ module.exports = grammar({
         'if',
         'impl',
         'extern',
+        'macro',
         'nopanic',
         'let',
         'loop',

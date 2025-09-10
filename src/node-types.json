@@ -52,6 +52,10 @@
         "named": true
       },
       {
+        "type": "macro_declaration",
+        "named": true
+      },
+      {
         "type": "macro_invocation",
         "named": true
       },
@@ -1912,6 +1916,57 @@
     }
   },
   {
+    "type": "macro_body",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "macro_rule",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "macro_declaration",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "macro_body",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "visibility_modifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "macro_invocation",
     "named": true,
     "fields": {
@@ -1939,6 +1994,32 @@
           "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "macro_rule",
+    "named": true,
+    "fields": {
+      "expansion": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "token_tree",
+            "named": true
+          }
+        ]
+      },
+      "pattern": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "token_tree",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -3428,6 +3509,10 @@
   },
   {
     "type": "loop",
+    "named": false
+  },
+  {
+    "type": "macro",
     "named": false
   },
   {
