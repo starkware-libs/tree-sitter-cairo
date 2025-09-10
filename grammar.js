@@ -730,7 +730,16 @@ module.exports = grammar({
 
     // allows every ascii char except `"` unless it's escaped (accept escape sequences also). Max length is 31
     shortstring_literal: ($) =>
-      token(seq('\'', /(([^'\\]|\\.){0,31})/, '\'', optional('_felt252'))),
+      token(
+        seq(
+          '\'', /(([^'\\]|\\.)*)/, '\'',
+          optional(
+            token.immediate(
+              seq('_', choice(...integerTypes, 'u256', 'felt252')),
+            ),
+          ),
+        ),
+      ),
 
     boolean_literal: (_) => choice('true', 'false'),
 

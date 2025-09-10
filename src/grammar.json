@@ -3665,7 +3665,7 @@
           },
           {
             "type": "PATTERN",
-            "value": "(([^'\\\\]|\\\\.){0,31})"
+            "value": "(([^'\\\\]|\\\\.)*)"
           },
           {
             "type": "STRING",
@@ -3675,8 +3675,73 @@
             "type": "CHOICE",
             "members": [
               {
-                "type": "STRING",
-                "value": "_felt252"
+                "type": "IMMEDIATE_TOKEN",
+                "content": {
+                  "type": "SEQ",
+                  "members": [
+                    {
+                      "type": "STRING",
+                      "value": "_"
+                    },
+                    {
+                      "type": "CHOICE",
+                      "members": [
+                        {
+                          "type": "STRING",
+                          "value": "u8"
+                        },
+                        {
+                          "type": "STRING",
+                          "value": "i8"
+                        },
+                        {
+                          "type": "STRING",
+                          "value": "u16"
+                        },
+                        {
+                          "type": "STRING",
+                          "value": "i16"
+                        },
+                        {
+                          "type": "STRING",
+                          "value": "u32"
+                        },
+                        {
+                          "type": "STRING",
+                          "value": "i32"
+                        },
+                        {
+                          "type": "STRING",
+                          "value": "u64"
+                        },
+                        {
+                          "type": "STRING",
+                          "value": "i64"
+                        },
+                        {
+                          "type": "STRING",
+                          "value": "u128"
+                        },
+                        {
+                          "type": "STRING",
+                          "value": "i128"
+                        },
+                        {
+                          "type": "STRING",
+                          "value": "usize"
+                        },
+                        {
+                          "type": "STRING",
+                          "value": "u256"
+                        },
+                        {
+                          "type": "STRING",
+                          "value": "felt252"
+                        }
+                      ]
+                    }
+                  ]
+                }
               },
               {
                 "type": "BLANK"
