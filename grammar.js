@@ -61,19 +61,21 @@ const TOKEN_TREE_NON_SPECIAL_PUNCTUATION = [
 ];
 
 const integerTypes = [
+  'felt252',
   'u8',
-  'i8',
   'u16',
-  'i16',
   'u32',
-  'i32',
   'u64',
-  'i64',
   'u128',
+  'u256',
+  'i8',
+  'i16',
+  'i32',
+  'i64',
   'i128',
   'usize',
 ];
-const primitiveTypes = integerTypes.concat(['bool', 'ByteArray', 'felt252']);
+const primitiveTypes = integerTypes.concat(['bool', 'ByteArray']);
 module.exports = grammar({
   name: 'cairo',
 
@@ -111,6 +113,7 @@ module.exports = grammar({
     _declaration_statement: ($) =>
       choice(
         $.const_item,
+        $.macro_declaration,
         $.macro_invocation,
         $.empty_statement,
         $.attribute_item,
@@ -205,6 +208,37 @@ module.exports = grammar({
         ),
         '!',
         alias($.delim_token_tree, $.token_tree),
+      ),
+
+    // macro_rules! name { patterns }
+    macro_declaration: ($) =>
+      prec(
+        2,
+        seq(
+          optional($.visibility_modifier),
+          'macro',
+          field('name', $.identifier),
+          field('body', $.macro_body),
+        ),
+      ),
+
+    // { pattern1 => expansion1; pattern2 => expansion2; }
+    macro_body: ($) =>
+      seq(
+        '{',
+        repeat($.macro_rule),
+        '}',
+      ),
+
+    // pattern => expansion;
+    macro_rule: ($) =>
+      seq(
+        field('pattern', alias($.delim_token_tree, $.token_tree)),
+        '=>',
+        '{',
+        field('expansion', alias(repeat($._delim_tokens), $.token_tree)),
+        '}',
+        ';',
       ),
 
     empty_statement: (_) => ';',
@@ -358,7 +392,9 @@ module.exports = grammar({
         optional($.mutable_specifier),
         field('pattern', $._pattern),
         optional(seq(':', field('type', $._type))),
-        optional(seq('=', field('value', $.expression))),
+        '=',
+        field('value', $.expression),
+        optional(seq('else', field('else_block', $.block))),
         ';',
       ),
 
@@ -429,13 +465,11 @@ module.exports = grammar({
         $.array_type,
         $._type_identifier,
         $.macro_invocation,
-        alias(choice(...primitiveTypes), $.primitive_type),
       ),
 
     // Helper
     _path: ($) =>
       choice(
-        alias(choice(...primitiveTypes), $.identifier),
         $.super,
         $.identifier,
         $.scoped_identifier,
@@ -448,7 +482,7 @@ module.exports = grammar({
         1,
         seq(
           '<',
-          sepBy1(
+          sepBy(
             ',',
             seq(
               repeat($.attribute_item),
@@ -456,7 +490,6 @@ module.exports = grammar({
                 $.generic_type,
                 $._type_identifier,
                 $.generic_type_with_turbofish,
-                $._type_identifier,
                 $.constrained_type_parameter,
                 $.const_parameter,
               ),
@@ -486,6 +519,7 @@ module.exports = grammar({
               $.generic_type,
               $._type_identifier,
               $.generic_type_with_turbofish,
+              $.scoped_type_identifier,
             ),
           ),
         ),
@@ -551,7 +585,6 @@ module.exports = grammar({
         $.identifier,
         $.mutable_specifier,
         $.super,
-        alias(choice(...primitiveTypes), $.primitive_type),
         prec.right(repeat1(choice(...TOKEN_TREE_NON_SPECIAL_PUNCTUATION))),
         'break',
         'const',
@@ -562,6 +595,7 @@ module.exports = grammar({
         'if',
         'impl',
         'extern',
+        'macro',
         'nopanic',
         'let',
         'loop',
@@ -582,7 +616,6 @@ module.exports = grammar({
     _pattern: ($) =>
       choice(
         $._literal_pattern,
-        alias(choice(...primitiveTypes), $.identifier),
         $.identifier,
         $.scoped_identifier,
         $.tuple_pattern,
@@ -625,7 +658,7 @@ module.exports = grammar({
         field('type', choice($._type_identifier, $.scoped_type_identifier)),
         '{',
         sepBy(',', $.field_pattern),
-        optional(','),
+        optional(choice(',', seq(',', '..'))),
         '}',
       ),
     // for example in let Foo { a: bar, b: baz } = c; it would be `a: bar` and `b: baz`
@@ -714,11 +747,7 @@ module.exports = grammar({
       token(
         seq(
           choice(/[0-9_]+/, /0x[0-9a-fA-F_]+/, /0b[01_]+/, /0o[0-7_]+/),
-          optional(
-            token.immediate(
-              seq('_', choice(...integerTypes, 'u256', 'felt252')),
-            ),
-          ),
+          optional(token.immediate(seq('_', choice(...integerTypes)))),
         ),
       ),
 
@@ -727,8 +756,13 @@ module.exports = grammar({
       seq(alias(/[bc]?"/, '"'), /([^"\\]|\\.)*/, token.immediate('"')),
 
     // allows every ascii char except `"` unless it's escaped (accept escape sequences also). Max length is 31
-    shortstring_literal: ($) =>
-      token(seq('\'', /(([^'\\]|\\.){0,31})/, '\'', optional('_felt252'))),
+    shortstring_literal: (_) =>
+      token(
+        seq(
+          '\'', /(([^'\\]|\\.)*)/, '\'',
+          optional(token.immediate(seq('_', choice(...integerTypes)))),
+        ),
+      ),
 
     boolean_literal: (_) => choice('true', 'false'),
 
@@ -795,7 +829,7 @@ module.exports = grammar({
     type_arguments: ($) =>
       seq(
         token(prec(1, '<')),
-        sepBy1(',', seq(choice($._type, $._literal, $.block))),
+        sepBy(',', seq(optional(seq($.identifier, ':')), choice($._type, $._literal, $.block))),
         optional(','),
         '>',
       ),
@@ -813,13 +847,11 @@ module.exports = grammar({
     expression_except_range: ($) =>
       choice(
         prec.left($.identifier),
-        alias(choice(...primitiveTypes), $.identifier),
         prec.left($._reserved_identifier),
         $.binary_expression,
         $.call_expression,
         $._expression_ending_with_block,
         $._literal,
-        $.reference_expression,
         $.field_expression,
         $.scoped_identifier,
         $.tuple_expression,
@@ -1020,31 +1052,24 @@ module.exports = grammar({
     // Option::Some(a) => a,
     // and
     // Option::None => 0,
-    match_arm: ($) =>
-      prec.right(
-        seq(
-          repeat(choice($.attribute_item, $.inner_attribute_item)),
-          field('pattern', $.match_pattern),
-          '=>',
-          choice(
-            seq(field('value', $.expression), ','),
-            field('value', prec(1, $._expression_ending_with_block)),
-          ),
-        ),
-      ),
+    match_arm: ($) => prec.right(seq($.match_arm_content, ',')),
     // for example in
     // match u256_guarantee_inv_mod_n(a, n) {
     //     Result::Ok((inv_a, _, _, _, _, _, _, _, _)) => Option::Some(inv_a),
     //     Result::Err(_) => Option::None(())
     // }
     // it would be Result::Err(_) => Option::None(())
-    last_match_arm: ($) =>
+    last_match_arm: ($) => seq($.match_arm_content, optional(',')),
+
+    // Option::Some(a) => a
+    // and
+    // Option::None => 0
+    match_arm_content: ($) =>
       seq(
         repeat(choice($.attribute_item, $.inner_attribute_item)),
         field('pattern', $.match_pattern),
         '=>',
         field('value', $.expression),
-        optional(','),
       ),
 
     // Option::Some(1)
@@ -1152,7 +1177,11 @@ module.exports = grammar({
         '(',
         sepBy(
           ',',
-          seq(repeat($.attribute_item), choice($.expression, $.named_argument)),
+          seq(
+            repeat($.attribute_item),
+            optional($.ref_specifier),
+            choice($.expression, $.named_argument),
+          ),
         ),
         optional(','),
         ')',
@@ -1160,18 +1189,11 @@ module.exports = grammar({
     // for example in foo(bar: a, :b, :c) it would be `bar: a` and `:b`  and `c`
     named_argument: ($) => seq(optional($.identifier), ':', $.expression),
 
-    // for example in foo(ref b) it would be `ref b`
-    reference_expression: ($) =>
-      prec(
-        PREC.unary,
-        seq('ref', optional($.mutable_specifier), field('value', $.expression)),
-      ),
-
     // Helper alias
     _type_identifier: ($) => alias($.identifier, $.type_identifier),
 
     // General helpers
-    identifier: ($) => /[a-zA-Z_][a-zA-Z0-9_]*/,
+    identifier: ($) => choice(alias(choice(...primitiveTypes), $.primitive_type), /[a-zA-Z_][a-zA-Z0-9_]*/),
     // keywords
     visibility_modifier: ($) =>
       prec(
