@@ -1752,6 +1752,10 @@
             "named": true
           },
           {
+            "type": "let_chain",
+            "named": true
+          },
+          {
             "type": "let_condition",
             "named": true
           }
@@ -1838,6 +1842,29 @@
       "types": [
         {
           "type": "attribute",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "let_chain",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "expression",
+          "named": true
+        },
+        {
+          "type": "let_chain",
+          "named": true
+        },
+        {
+          "type": "let_condition",
           "named": true
         }
       ]
@@ -2154,6 +2181,10 @@
         "types": [
           {
             "type": "expression",
+            "named": true
+          },
+          {
+            "type": "let_chain",
             "named": true
           },
           {
@@ -2600,7 +2631,6 @@
   {
     "type": "source_file",
     "named": true,
-    "root": true,
     "fields": {},
     "children": {
       "multiple": true,
@@ -3259,6 +3289,10 @@
             "named": true
           },
           {
+            "type": "let_chain",
+            "named": true
+          },
+          {
             "type": "let_condition",
             "named": true
           }
@@ -3508,8 +3542,7 @@
   },
   {
     "type": "line_comment",
-    "named": true,
-    "extra": true
+    "named": true
   },
   {
     "type": "loop",
