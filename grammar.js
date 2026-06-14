@@ -1017,7 +1017,7 @@ module.exports = grammar({
       ),
 
     // for example in if a == b { () } else { () } it would be `a == b`
-    _condition: ($) => choice($.expression, $.let_condition),
+    _condition: ($) => choice($.expression, $.let_condition, $.let_chain),
     // for example in if let Option::Some(a)= b { () } else { () } it would be `let Option::Some(a)= b`
     let_condition: ($) =>
       seq(
@@ -1025,6 +1025,20 @@ module.exports = grammar({
         field('pattern', $._pattern),
         '=',
         field('value', prec.left(PREC.and, $.expression)),
+      ),
+    // a chain of `&&`-separated conditions where at least one is a `let`,
+    // for example in `if let Some(a) = x && let Some(b) = y { }` it would be
+    // `let Some(a) = x && let Some(b) = y`
+    let_chain: ($) =>
+      prec.left(
+        PREC.and,
+        choice(
+          seq($.let_chain, '&&', $.let_condition),
+          seq($.let_chain, '&&', $.expression),
+          seq($.let_condition, '&&', $.let_condition),
+          seq($.let_condition, '&&', $.expression),
+          seq($.expression, '&&', $.let_condition),
+        ),
       ),
 
     // for example in if a == b { () } else { () } it would be `else { () }`

@@ -1752,6 +1752,10 @@
             "named": true
           },
           {
+            "type": "let_chain",
+            "named": true
+          },
+          {
             "type": "let_condition",
             "named": true
           }
@@ -1838,6 +1842,29 @@
       "types": [
         {
           "type": "attribute",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "let_chain",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "expression",
+          "named": true
+        },
+        {
+          "type": "let_chain",
+          "named": true
+        },
+        {
+          "type": "let_condition",
           "named": true
         }
       ]
@@ -2154,6 +2181,10 @@
         "types": [
           {
             "type": "expression",
+            "named": true
+          },
+          {
+            "type": "let_chain",
             "named": true
           },
           {
@@ -3256,6 +3287,10 @@
         "types": [
           {
             "type": "expression",
+            "named": true
+          },
+          {
+            "type": "let_chain",
             "named": true
           },
           {
